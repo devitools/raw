@@ -1,4 +1,5 @@
 const category = require('src/domains/Category/en-us')
+const customer = require('src/domains/Customer/en-us')
 
 module.exports = {
   pages: {
@@ -7,6 +8,7 @@ module.exports = {
     }
   },
   domains: {
-    category
+    category,
+    customer
   }
 }

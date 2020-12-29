@@ -1,27 +1,33 @@
 <template>
   <div class="customer container">
-    <h1>Customer</h1>
     <!--suppress RequiredAttributes -->
-    <AppForm v-bind="customer" />
+    <AppForm v-bind="provide" />
   </div>
 </template>
 
 <script>
 import AppForm from 'src/components/Schema/AppForm'
 import Customer from 'src/domains/Customer/Schema/Customer'
-// @ is an alias to /src
 
 export default {
   name: 'Customer',
   components: {
     AppForm
   },
+  props: {
+    scope: {
+      type: String,
+      default: 'SCOPE_ADD',
+    }
+  },
   data: () => ({
-    customer: {}
+    provide: {}
   }),
   created () {
-    const customer = new Customer()
-    this.customer = customer.provide()
+    this.provide = {
+      ...Customer.build().provide(),
+      scope: this.scope
+    }
   }
 }
 </script>

@@ -1,23 +1,24 @@
-import Category from '../../Category/Schema/Category'
+import Schema from '../../../core/Schema'
 
 /**
  * @class {Customer}
  */
-export default class Customer extends Category {
-  construct () {
-    super.construct()
+export default class Customer extends Schema {
+  /**
+   * @type {string}
+   */
+  domain = 'customer'
 
-    this.getField('name')
+  /**
+   */
+  construct () {
+    this.addField('name')
       .fieldFormWidth('50')
-      .fieldFormOrder('1')
 
     this.addField('email')
-      .fieldFormLabel('Email Address')
-      .fieldFormPlaceholder('wilcorrea@gmail.com')
       .fieldFormWidth('50')
-      .fieldFormOrder('2')
 
-    this.getField('description')
-      .fieldFormOrder('3')
+    this.addField('description')
+      .fieldIsTextarea()
   }
 }

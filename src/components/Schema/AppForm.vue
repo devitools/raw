@@ -1,9 +1,12 @@
 <template>
-  <div>
-    <form class="grid">
+  <div class="AppForm">
+    <div class="grid">
       <div class="cell order-0">
         <h5>{{ title }}</h5>
       </div>
+    </div>
+
+    <form class="grid">
       <template v-for="(field, key) in fields">
         <div
           :key="key"
@@ -66,7 +69,7 @@ export default {
     },
     scope: {
       type: String,
-      default: 'SCOPE_APP',
+      default: 'SCOPE_ADD',
     }
   },
   data () {
