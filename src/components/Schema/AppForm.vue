@@ -117,61 +117,25 @@ export default {
     initializeFields () {
       // get the object of the schema
       const schema = this.schema()
-      Object
-        // extract the fields of the object
-        .entries(schema)
-        // through the fields of the schema
-        .forEach(([key, field]) => {
-          // through the listeners of the field
-          for (const listener in field.form.listeners) {
-            // eslint-disable-next-line no-prototype-builtins
-            if (!field.form.listeners.hasOwnProperty(listener)) {
-              continue
-            }
-            // extract a listener
-            const handler = field.form.listeners[listener]
-            // check if listener is a function...
-            if (typeof handler !== 'function') {
-              // if it isn't let it go
-              continue
-            }
-            // update the listener with bonded handler
-            field.form.listeners[listener] = handler.bind(this)
-          }
-
-          // update the modified field
-          schema[key] = field
-        })
-      this.fields = schema
+      const getter = (field) => {
+        return field.form.listeners
+      }
+      const setter = (field, listener, handler) => {
+        field.form.listeners[listener] = handler
+      }
+      this.fields = this.applyBind(schema, getter, setter)
     },
     /**
      */
     initializeButtons () {
       const actions = this.actions()
-      Object
-        .entries(actions)
-        .forEach(([key, action]) => {
-          // through the listeners of the field
-          for (const listener in action.listeners) {
-            // eslint-disable-next-line no-prototype-builtins
-            if (!action.listeners.hasOwnProperty(listener)) {
-              continue
-            }
-            // extract a listener
-            const handler = action.listeners[listener]
-            // check if listener is a function...
-            if (typeof handler !== 'function') {
-              // if it isn't let it go
-              continue
-            }
-            // update the listener with bonded handler
-            action.listeners[listener] = handler.bind(this)
-          }
-
-          // update the modified field
-          actions[key] = action
-        })
-      this.buttons = actions
+      const getter = (action) => {
+        return action.listeners
+      }
+      const setter = (action, listener, handler) => {
+        action.listeners[listener] = handler
+      }
+      this.buttons = this.applyBind(actions, getter, setter)
     },
     /**
      */
@@ -194,6 +158,41 @@ export default {
         },
         {}
       )
+    },
+    /**
+     * @param {Record<string,unknown>} object
+     * @param {function(element: unknown): Record<string,Function>[]} getter
+     * @param {function(element: unknown, listener: string, handler: Function): void} setter
+     */
+    applyBind (object, getter, setter) {
+      Object
+        // extract the fields of the object
+        .entries(object)
+        // through the fields of the schema
+        .forEach(([key, element]) => {
+          const listeners = getter(element)
+          // through the listeners of the field
+          for (const listener in listeners) {
+            // eslint-disable-next-line no-prototype-builtins
+            if (!listeners.hasOwnProperty(listener)) {
+              continue
+            }
+            // extract a listener
+            const handler = listeners[listener]
+            // check if listener is a function...
+            if (typeof handler !== 'function') {
+              // if it isn't let it go
+              continue
+            }
+            // update the listener with bonded handler
+            setter(element, listener, handler.bind(this))
+          }
+
+          // update the modified field
+          object[key] = element
+        })
+
+      return object
     },
     /**
      * @param {string} key

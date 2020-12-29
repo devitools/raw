@@ -25,10 +25,15 @@ export default class Category extends Schema {
       .fieldIsTextarea()
 
     this.addAction('save')
-      .actionOn('click', function () {
-        console.log('~> save')
-        save(this.record)
-          .then(console.log)
+      .actionOn('click', async function () {
+        this.$loading.show()
+        try {
+          await save(this.record)
+          this.$notification.success(this.$t('app.schema.actions.save.success'))
+        } catch (e) {
+          this.$notification.error(this.$t('app.schema.actions.save.error'))
+        }
+        this.$loading.hide()
       })
   }
 }

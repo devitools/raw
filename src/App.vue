@@ -44,19 +44,42 @@
         </select>
       </div>
     </footer>
+
+    <AppLoading />
+
+    <AppNotification />
   </div>
 </template>
 
 <script>
+import AppLoading from 'src/components/App/AppLoading'
+import AppNotification from 'src/components/App/AppNotification'
+
 export default {
+  /**
+   */
   name: 'App',
+  /**
+   */
+  components: { AppLoading, AppNotification },
+  /**
+   */
   data () {
-    return { locales: ['pt-br', 'en'] }
+    return {
+      locales: ['pt-br', 'en']
+    }
   },
+  /**
+   */
   created () {
     this.$i18n.locale = window.localStorage.getItem('locale') ?? 'en'
   },
+  /**
+   */
   methods: {
+    /**
+     * @param {string} locale
+     */
     save (locale) {
       window.localStorage.setItem('locale', locale)
     }
