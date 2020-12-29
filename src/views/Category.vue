@@ -1,8 +1,7 @@
 <template>
   <div class="category container">
-    <h1>Category</h1>
     <!--suppress RequiredAttributes -->
-    <AppForm v-bind="category" />
+    <AppForm v-bind="provide" />
   </div>
 </template>
 
@@ -15,12 +14,20 @@ export default {
   components: {
     AppForm
   },
+  props: {
+    scope: {
+      type: String,
+      default: 'SCOPE_ADD',
+    }
+  },
   data: () => ({
-    category: {}
+    provide: {}
   }),
   created () {
-    const category = new Category()
-    this.category = category.provide()
+    this.provide = {
+      ...Category.build().provide(),
+      scope: this.scope
+    }
   }
 }
 </script>

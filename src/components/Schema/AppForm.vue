@@ -1,41 +1,48 @@
 <template>
-  <form>
-    <template v-for="(field, key) in fields">
-      <div
-        :key="key"
-        class="field"
-        :class="`width-${field.form.attrs.width} height-${field.form.attrs.height}`"
-        :style="{ order: field.form.attrs.order }"
-      >
-        <component
-          :is="$options.is[field.is]"
-          :key="key"
-          v-model="record[key]"
-          :error="error[key]"
-          v-bind="field.form.attrs"
-          v-on="field.form.listeners"
-        />
+  <div>
+    <form class="grid">
+      <div class="cell order-0">
+        <h5>{{ title }}</h5>
       </div>
-    </template>
-
-    <div class="field">
-      <template v-for="(button, key) in buttons">
-        <button
+      <template v-for="(field, key) in fields">
+        <div
           :key="key"
-          :class="button.color"
-          type="button"
-          v-bind="button.attrs"
-          v-on="button.listeners"
+          class="cell"
+          :class="`width-${field.form.attrs.width} height-${field.form.attrs.height} order-${field.form.attrs.order}`"
         >
-          {{ button.attrs.label }}
-        </button>
+          <component
+            :is="$options.is[field.is]"
+            :key="key"
+            v-model="record[key]"
+            :error="error[key]"
+            v-bind="{ ...field.form.attrs, ...fieldLocales(key) }"
+            v-on="field.form.listeners"
+          />
+        </div>
       </template>
+    </form>
+
+    <div class="grid">
+      <div class="cell">
+        <template v-for="(button, key) in buttons">
+          <component
+            :is="button.is"
+            :key="key"
+            :class="button.color"
+            type="button"
+            v-bind="button.attrs"
+            v-on="button.listeners"
+          >
+            {{ $t(`domains.${domain}.actions.${key}.label`) }}
+          </component>
+        </template>
+      </div>
     </div>
 
-    <div class="field">
+    <div>
       <pre>{{ record }}</pre>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -52,6 +59,14 @@ export default {
     actions: {
       type: Function,
       required: true,
+    },
+    domain: {
+      type: String,
+      required: true,
+    },
+    scope: {
+      type: String,
+      default: 'SCOPE_APP',
     }
   },
   data () {
@@ -66,6 +81,10 @@ export default {
     validation () {
       return {}
     },
+    title () {
+      const key = `domains.${this.domain}.rotules.${this.scope}`
+      return this.$te(key) ? this.$t(key) : ''
+    }
   },
   watch: {
     validation: {
@@ -90,6 +109,8 @@ export default {
     this.initializeError()
   },
   methods: {
+    /**
+     */
     initializeFields () {
       // get the object of the schema
       const schema = this.schema()
@@ -114,11 +135,14 @@ export default {
             // update the listener with bonded handler
             field.form.listeners[listener] = handler.bind(this)
           }
+
           // update the modified field
           schema[key] = field
         })
       this.fields = schema
     },
+    /**
+     */
     initializeButtons () {
       const actions = this.actions()
       Object
@@ -140,11 +164,14 @@ export default {
             // update the listener with bonded handler
             action.listeners[listener] = handler.bind(this)
           }
+
           // update the modified field
           actions[key] = action
         })
       this.buttons = actions
     },
+    /**
+     */
     initializeRecord () {
       this.record = Object.entries(this.schema()).reduce(
         (accumulator, [key, field]) => {
@@ -154,6 +181,8 @@ export default {
         {}
       )
     },
+    /**
+     */
     initializeError () {
       this.error = Object.entries(this.schema()).reduce(
         (accumulator, [key]) => {
@@ -163,128 +192,30 @@ export default {
         {}
       )
     },
-  },
-}
-</script>
+    /**
+     * @param {string} key
+     */
+    fieldLocales (key) {
+      const path = `domains.${this.domain}.fields.${key}`
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-form {
-  display: grid;
-  grid-template-columns: repeat(20, 5%);
-}
+      const attrs = [
+        'label',
+        'placeholder',
+        'options',
+      ]
 
-form > .field {
-  grid-column: auto/span 20;
-  padding: 5px;
-  order: 100;
-}
+      const reducer = (locales, attr) => {
+        const locale = `${path}.${attr}`
+        if (!this.$te(locale)) {
+          return locales
+        }
+        locales[attr] = this.$t(locale)
+        return locales
+      }
 
-form .field.width-5 {
-  grid-column: auto/span 1;
-}
-
-form .field.width-10 {
-  grid-column: auto/span 2;
-}
-
-form .field.width-15 {
-  grid-column: auto/span 3;
-}
-
-form .field.width-20 {
-  grid-column: auto/span 4;
-}
-
-form .field.width-25 {
-  grid-column: auto/span 5;
-}
-
-form .field.width-30 {
-  grid-column: auto/span 6;
-}
-
-form .field.width-35 {
-  grid-column: auto/span 7;
-}
-
-form .field.width-40 {
-  grid-column: auto/span 8;
-}
-
-form .field.width-45 {
-  grid-column: auto/span 9;
-}
-
-form .field.width-50 {
-  grid-column: auto/span 10;
-}
-
-form .field.width-55 {
-  grid-column: auto/span 11;
-}
-
-form .field.width-60 {
-  grid-column: auto/span 12;
-}
-
-form .field.width-65 {
-  grid-column: auto/span 13;
-}
-
-form .field.width-70 {
-  grid-column: auto/span 14;
-}
-
-form .field.width-75 {
-  grid-column: auto/span 15;
-}
-
-form .field.width-80 {
-  grid-column: auto/span 16;
-}
-
-form .field.width-85 {
-  grid-column: auto/span 17;
-}
-
-form .field.width-90 {
-  grid-column: auto/span 18;
-}
-
-form .field.width-95 {
-  grid-column: auto/span 19;
-}
-
-form .field.width-100 {
-  grid-column: auto/span 20;
-}
-
-form .field.height-1 {
-  grid-row: auto/span 1;
-}
-
-form .field.height-2 {
-  grid-row: auto/span 2;
-}
-
-form .field.height-3 {
-  grid-row: auto/span 3;
-}
-
-form .field.height-4 {
-  grid-row: auto/span 4;
-}
-
-form .field.height-5 {
-  grid-row: auto/span 5;
-}
-
-@media (max-width: 700px) {
-  form:not(.no-break) .field:not(.no-break) {
-    grid-column: auto/span 20 !important;
-    grid-row: auto/span 1;
+      return attrs.reduce(reducer, {})
+    }
   }
 }
-</style>
+</script>
 

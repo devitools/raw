@@ -6,35 +6,25 @@ import { save } from 'src/domains/Category/Schema/services'
  */
 export default class Category extends Schema {
   /**
+   * @type {string}
+   */
+  domain = 'category'
+
+  /**
    */
   construct () {
     this.addField('name')
       .fieldIsInput()
-      .fieldFormLabel('Name')
-      .fieldFormPlaceholder('Type a cute name')
       .fieldFormWidth('50')
 
     this.addField('type')
       .fieldIsSelect()
-      .fieldFormLabel('Type')
       .fieldFormWidth('50')
-      .fieldFormSet('options', [
-        {
-          value: 1,
-          label: 'Cute'
-        },
-        {
-          value: 2,
-          label: 'Cool'
-        }
-      ])
 
     this.addField('description')
       .fieldIsTextarea()
-      .fieldFormLabel('Description')
 
     this.addAction('save')
-      .actionLabel('Salvar')
       .actionOn('click', function () {
         console.log('~> save')
         save(this.record)

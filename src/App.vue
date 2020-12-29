@@ -3,18 +3,54 @@
     <div id="nav">
       <router-link to="/">
         Home
-      </router-link> |
+      </router-link>
+      |
       <router-link to="/category">
         Category
-      </router-link> |
+      </router-link>
+      |
       <router-link to="/customer">
         Customer
       </router-link>
     </div>
 
     <router-view />
+
+    <footer>
+      <div class="container full-width">
+        <select
+          v-model="$i18n.locale"
+          @input="save($event.target.value)"
+        >
+          <option
+            v-for="(locale, i) in locales"
+            :key="`locale-${i}`"
+            :value="locale"
+          >
+            {{ locale }}
+          </option>
+        </select>
+      </div>
+    </footer>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'App',
+  data () {
+    return { locales: ['pt-br', 'en'] }
+  },
+  created () {
+    this.$i18n.locale = window.localStorage.getItem('locale') ?? 'en'
+  },
+  methods: {
+    save (locale) {
+      window.localStorage.setItem('locale', locale)
+    }
+  }
+}
+</script>
 
 <style>
 #app {
@@ -35,5 +71,13 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+footer {
+  bottom: 0;
+  position: absolute;
+  padding: 20px 0;
+  width: 100%;
+  background-color: #56904c;
 }
 </style>

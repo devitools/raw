@@ -3,6 +3,11 @@
  */
 export default class Schema {
   /**
+   * @type {string}
+   */
+  domain = ''
+
+  /**
    */
   constructor () {
     this.schema = {}
@@ -10,6 +15,13 @@ export default class Schema {
     this.__currentField = undefined
     this.__currentAction = undefined
     this.construct()
+  }
+
+  /**
+   * @return {Schema}
+   */
+  static build () {
+    return new this()
   }
 
   /**
@@ -111,6 +123,7 @@ export default class Schema {
   addAction (name) {
     this.__currentAction = name
     this.actions[name] = {
+      is: 'button',
       color: 'btn btn-primary',
       attrs: {
         label: '',
@@ -142,6 +155,7 @@ export default class Schema {
 
   provide () {
     return {
+      domain: this.domain,
       schema: () => this.schema,
       actions: () => this.actions,
     }
