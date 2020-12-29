@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import AppForm from '@/components/Schema/AppForm'
+import AppForm from 'src/components/Schema/AppForm'
 import Category from 'src/domains/Category/Schema/Category'
 
 export default {

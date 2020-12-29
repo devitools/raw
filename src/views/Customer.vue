@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import AppForm from '@/components/Schema/AppForm'
+import AppForm from 'src/components/Schema/AppForm'
 import Customer from 'src/domains/Customer/Schema/Customer'
 // @ is an alias to /src
 

@@ -1,5 +1,5 @@
 import Schema from '../../../core/Schema'
-import { save } from '@/domains/Category/Schema/services'
+import { save } from 'src/domains/Category/Schema/services'
 
 /**
  * @class {Category}
