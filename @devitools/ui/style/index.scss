@@ -1,0 +1,36 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(100, 1fr);
+}
+
+.grid > .cell {
+  grid-column: auto/span 100;
+  grid-row: auto/span 1;
+  padding: 5px;
+  order: 100;
+}
+
+@for $i from 1 through 100 {
+  .grid .cell.width-#{$i} {
+    grid-column: auto/span #{$i};
+  }
+}
+
+@for $i from 1 through 10 {
+  .grid .cell.height-#{$i} {
+    grid-row: auto/span #{$i};
+  }
+}
+
+@for $i from 1 through 100 {
+  .grid .cell.order-#{$i} {
+    grid-row: auto/span #{$i};
+  }
+}
+
+@media (max-width: 700px) {
+  .grid:not(.no-break) .cell:not(.no-break) {
+    grid-column: auto/span 100 !important;
+    grid-row: auto/span 1;
+  }
+}

@@ -4,7 +4,7 @@ import VueI18n from 'vue-i18n'
 Vue.use(VueI18n)
 
 function loadLocaleMessages () {
-  const locales = require.context('./locales', true, /[A-Za-z0-9-_,\s]+\.locale.js$/i)
+  const locales = require.context('../resources/locales', true, /[A-Za-z0-9-_,\s]+\.locale.js$/i)
   const messages = {}
   locales
     .keys()

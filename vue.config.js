@@ -6,7 +6,11 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        'src': path.resolve(__dirname, './src')
+        '@devitools': path.resolve(__dirname, './@devitools'),
+        'src': path.resolve(__dirname, './src'),
+        'resources': path.resolve(__dirname, './resources'),
+        'source': path.resolve(__dirname, './source'),
+        'routes': path.resolve(__dirname, './routes'),
       },
       extensions: ['.js', '.ts', '.vue', '.json']
     }

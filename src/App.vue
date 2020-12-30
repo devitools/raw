@@ -52,8 +52,8 @@
 </template>
 
 <script>
-import AppLoading from 'src/components/App/AppLoading'
-import AppNotification from 'src/components/App/AppNotification'
+import AppLoading from '@devitools/ui/components/App/AppLoading'
+import AppNotification from '@devitools/ui/components/App/AppNotification'
 
 export default {
   /**
