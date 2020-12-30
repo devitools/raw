@@ -6,34 +6,39 @@
     >
       {{ label }}
     </label>
-    <textarea
+    <input
       :id="name"
       class="form-control"
+      :class="{ 'is-invalid': error }"
+      :type="type"
       :name="name"
       :placeholder="placeholder"
-      :rows="rows"
       :value="value"
-      @input="$emit('input', $event.target.value)"
+      @input="$emit('input', $event)"
       @change="$emit('change', $event)"
       @keypress="$emit('keypress', $event)"
       @keydown="$emit('keydown', $event)"
       @blur="$emit('blur', $event)"
       @focus="$emit('focus', $event)"
-    ></textarea>
+    />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AppTextarea',
+  name: 'AppEmail',
   props: {
     value: {
       type: String,
       default: ''
     },
+    error: {
+      type: Boolean,
+      default: false
+    },
     type: {
       type: String,
-      default: 'text'
+      default: 'email'
     },
     name: {
       type: String,
@@ -45,15 +50,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: ''
-    },
-    error: {
-      type: Boolean,
-      default: false
-    },
-    rows: {
-      type: [Number, String],
-      default: 3
+      default: 'text'
     }
   }
 }

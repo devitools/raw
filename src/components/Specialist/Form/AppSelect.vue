@@ -6,27 +6,34 @@
     >
       {{ label }}
     </label>
-    <input
+    <select
       :id="name"
       class="form-control"
       :class="{ 'is-invalid': error }"
       :type="type"
       :name="name"
-      :placeholder="placeholder"
       :value="value"
-      @input="$emit('input', $event.target.value)"
+      @input="$emit('input', $event)"
       @change="$emit('change', $event)"
       @keypress="$emit('keypress', $event)"
       @keydown="$emit('keydown', $event)"
       @blur="$emit('blur', $event)"
       @focus="$emit('focus', $event)"
-    />
+    >
+      <option
+        v-for="(option, index) in options"
+        :key="index"
+        :value="option.value"
+      >
+        {{ option.label }}
+      </option>
+    </select>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'AppEmail',
+  name: 'AppSelect',
   props: {
     value: {
       type: String,
@@ -38,7 +45,7 @@ export default {
     },
     type: {
       type: String,
-      default: 'email'
+      default: 'text'
     },
     name: {
       type: String,
@@ -48,9 +55,9 @@ export default {
       type: String,
       default: ''
     },
-    placeholder: {
-      type: String,
-      default: 'text'
+    options: {
+      type: Array,
+      default: () => ([])
     }
   }
 }

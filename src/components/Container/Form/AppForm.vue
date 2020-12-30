@@ -8,20 +8,14 @@
 
     <form class="grid">
       <template v-for="(field, key) in fields">
-        <div
+        <AppField
           :key="key"
-          class="cell"
-          :class="`width-${field.form.attrs.width} height-${field.form.attrs.height} order-${field.form.attrs.order}`"
-        >
-          <component
-            :is="$options.is[field.is]"
-            :key="key"
-            v-model="record[key]"
-            :error="error[key]"
-            v-bind="{ ...field.form.attrs, ...fieldLocales(key) }"
-            v-on="field.form.listeners"
-          />
-        </div>
+          v-model="record[key]"
+          :name="key"
+          :error="error[key]"
+          :domain="domain"
+          :field="field"
+        />
       </template>
     </form>
 
@@ -49,11 +43,17 @@
 </template>
 
 <script>
-import components from 'src/settings/components'
+import AppField from '@/components/Container/Form/AppField'
 
 export default {
+  /**
+   */
   name: 'AppForm',
-  is: components,
+  /**
+   */
+  components: { AppField },
+  /**
+   */
   props: {
     schema: {
       type: Function,
@@ -72,6 +72,8 @@ export default {
       default: 'SCOPE_ADD',
     }
   },
+  /**
+   */
   data () {
     return {
       record: {},
@@ -80,7 +82,11 @@ export default {
       buttons: {}
     }
   },
+  /**
+   */
   computed: {
+    /**
+     */
     validation () {
       return {}
     },
@@ -89,6 +95,8 @@ export default {
       return this.$te(key) ? this.$t(key) : ''
     }
   },
+  /**
+   */
   watch: {
     validation: {
       deep: true,
@@ -193,29 +201,6 @@ export default {
         })
 
       return object
-    },
-    /**
-     * @param {string} key
-     */
-    fieldLocales (key) {
-      const path = `domains.${this.domain}.fields.${key}`
-
-      const attrs = [
-        'label',
-        'placeholder',
-        'options',
-      ]
-
-      const reducer = (locales, attr) => {
-        const locale = `${path}.${attr}`
-        if (!this.$te(locale)) {
-          return locales
-        }
-        locales[attr] = this.$t(locale)
-        return locales
-      }
-
-      return attrs.reduce(reducer, {})
     }
   }
 }

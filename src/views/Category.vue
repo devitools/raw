@@ -6,28 +6,20 @@
 </template>
 
 <script>
-import AppForm from 'src/components/Schema/AppForm'
+import View from 'src/components/Controller/View'
 import Category from 'src/domains/Category/Schema/Category'
 
+/**
+ */
 export default {
+  /**
+   */
   name: 'Category',
-  components: {
-    AppForm
-  },
-  props: {
-    scope: {
-      type: String,
-      default: 'SCOPE_ADD',
-    }
-  },
-  data: () => ({
-    provide: {}
-  }),
-  created () {
-    this.provide = {
-      ...Category.build().provide(),
-      scope: this.scope
-    }
-  }
+  /**
+   */
+  extends: View,
+  /**
+   */
+  schema: Category
 }
 </script>
