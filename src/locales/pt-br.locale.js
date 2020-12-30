@@ -1,14 +1,9 @@
-const category = require('src/domains/Category/pt-br')
-const customer = require('src/domains/Customer/pt-br')
+const app = require('src/locales/pt-br/app')
+const pages = require('src/locales/pt-br/pages')
+const domains = require('src/locales/pt-br/domains')
 
 module.exports = {
-  pages: {
-    home: {
-      title: 'Início'
-    }
-  },
-  domains: {
-    category,
-    customer
-  }
+  app,
+  pages,
+  domains: domains()
 }

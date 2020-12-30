@@ -6,16 +6,15 @@ module.exports = {
   configureWebpack: {
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'),
         'src': path.resolve(__dirname, './src')
       },
-      extensions: ['.js', '.vue', '.json']
+      extensions: ['.js', '.ts', '.vue', '.json']
     }
   },
 
   pluginOptions: {
     i18n: {
-      locale: 'en',
+      locale: 'en-us',
       fallbackLocale: 'pt-br',
       localeDir: 'locales',
       enableInSFC: true

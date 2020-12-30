@@ -16,6 +16,5 @@ export default {
   select: {
     is: () => import('src/components/Specialist/Form/AppSelect.vue'),
     input: ($event) => $event.target.value
-  },
-  button: 'button',
+  }
 }

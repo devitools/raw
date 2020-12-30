@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import components from '@/settings/components'
+import specialists from 'src/settings/components/specialists'
 
 export default {
   /**
@@ -22,7 +22,7 @@ export default {
   name: 'AppField',
   /**
    */
-  is: components,
+  specialists: specialists,
   /**
    */
   props: {
@@ -51,24 +51,25 @@ export default {
      */
     componentIs () {
       const alias = this.field?.is ?? 'input'
-      const component = this.$options.is[alias]
-      return component.is
+      const specialist = this.$options.specialists[alias]
+      return specialist.is
     },
     /**
      * @return {function($event: *): *}
      */
     componentInput () {
       const alias = this.field?.is ?? 'input'
-      const component = this.$options.is[alias]
-      return component.input
+      const specialist = this.$options.specialists[alias]
+      return specialist.input
     },
     /**
      * @return {Record<string,unknown>}
      */
     bind () {
       const alias = this.field?.is ?? 'input'
+      const specialist = this.$options.specialists[alias]
 
-      const inherit = this.$options.is[alias]?.attrs ?? {}
+      const inherit = specialist?.attrs ?? {}
       const attrs = this.field?.form?.attrs ?? {}
       const locales = this.fieldLocales(this.name)
 

@@ -1,8 +1,8 @@
-export const rotules = {
+const rotules = {
   SCOPE_ADD: 'Add Category'
 }
 
-export const fields = {
+const fields = {
   name: {
     label: 'Name',
     placeholder: 'Type a cute name'
@@ -25,13 +25,13 @@ export const fields = {
   }
 }
 
-export const actions = {
+const actions = {
   save: {
     label: 'Save'
   }
 }
 
-export default {
+module.exports = {
   rotules,
   fields,
   actions

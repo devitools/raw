@@ -7,7 +7,7 @@
 
 <script>
 import View from 'src/components/Controller/View'
-import Category from 'src/domains/Category/Schema/Category'
+import Category from 'src/domains/General/Category/Schema/Category'
 
 /**
  */

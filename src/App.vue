@@ -66,7 +66,7 @@ export default {
    */
   data () {
     return {
-      locales: ['pt-br', 'en']
+      locales: ['pt-br', 'en-us']
     }
   },
   /**

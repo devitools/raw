@@ -1,8 +1,8 @@
-export const rotules = {
+const rotules = {
   SCOPE_ADD: 'Adicionar Cliente'
 }
 
-export const fields = {
+const fields = {
   name: {
     label: 'Nome',
     placeholder: 'Digite um nome fofo'
@@ -16,13 +16,13 @@ export const fields = {
   }
 }
 
-export const actions = {
+const actions = {
   save: {
     label: 'Salvar'
   }
 }
 
-export default {
+module.exports = {
   rotules,
   fields,
   actions

@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import AppField from '@/components/Container/Form/AppField'
+import AppField from 'src/components/Container/Form/AppField'
 
 export default {
   /**
