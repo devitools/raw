@@ -3,6 +3,11 @@
     class="cell"
     :class="classNames"
   >
+    <div class="AppLabel">
+      <label class="form-label">
+        {{ label }}
+      </label>
+    </div>
     <component
       :is="componentIs"
       :value="value"
@@ -14,7 +19,7 @@
 </template>
 
 <script>
-import specialists from '@/settings/components/specialists'
+import specialists from 'src/settings/components/specialists'
 
 export default {
   /**
@@ -92,7 +97,27 @@ export default {
       const width = this.schema?.form?.attrs?.width ?? '100'
       const height = this.schema?.form?.attrs?.height ?? '1'
       const order = this.schema?.form?.attrs?.order ?? 'auto'
-      return [this.name, `width-${width}`, `height-${height}`, `order-${order}`]
+      const classNames = [this.name, `width-${width}`, `height-${height}`, `order-${order}`]
+      if (this.error) {
+        classNames.push('error')
+      }
+      return classNames
+    },
+    /**
+     * @return {string}
+     */
+    label () {
+      const paths = [
+        `domains.${this.domain}.fields.${this.name}.label`,
+        `domains.${this.domain}.fields.${this.name}`
+      ]
+      for (const path of paths) {
+        if (!this.$te(path)) {
+          continue
+        }
+        return this.$t(path)
+      }
+      return ''
     }
   },
   /**
@@ -112,7 +137,6 @@ export default {
       const path = `domains.${this.domain}.fields.${name}`
 
       const attrs = [
-        'label',
         'placeholder',
         'options',
       ]

@@ -1,11 +1,5 @@
 <template>
-  <div :class="{ error }">
-    <label
-      class="form-label"
-      :for="name"
-    >
-      {{ label }}
-    </label>
+  <div class="AppSelect">
     <select
       :id="name"
       class="form-control"

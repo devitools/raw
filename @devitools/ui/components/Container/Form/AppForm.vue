@@ -40,7 +40,7 @@
 
 <script>
 import AppCell from '@devitools/ui/components/Container/Form/AppCell'
-import AppButton from '@devitools/ui/components/Container/AppButton'
+import AppButton from '@devitools/ui/components/Container/Shared/AppButton'
 
 export default {
   /**

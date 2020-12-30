@@ -1,11 +1,5 @@
 <template>
-  <div :class="{ error }">
-    <label
-      class="form-label"
-      :for="name"
-    >
-      {{ label }}
-    </label>
+  <div class="AppEmail">
     <input
       :id="name"
       class="form-control"
@@ -43,10 +37,6 @@ export default {
     name: {
       type: String,
       required: true
-    },
-    label: {
-      type: String,
-      default: ''
     },
     placeholder: {
       type: String,
